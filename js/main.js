@@ -59,9 +59,9 @@ function makeItem(obj) {
   var itemWidth = 25;
   var itemHeight = 70;
   var itemImg = item.querySelector('img');
-  item.setAttribute('style', 'left: ' + (obj.location.x + itemWidth) + 'px; top: ' + (obj.location.y + itemHeight) + 'px;');
-  itemImg.setAttribute('src', '' + obj.author.avatar);
-  itemImg.setAttribute('alt', '' + obj.offer.title);
+  item.style = 'left: ' + (obj.location.x + itemWidth) + 'px; top: ' + (obj.location.y + itemHeight) + 'px;';
+  itemImg.src = obj.author.avatar + '';
+  itemImg.alt = obj.offer.title + '';
   return item;
 }
 
