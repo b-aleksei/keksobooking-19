@@ -8,5 +8,6 @@
 build/
 node_modules/
 npm-debug.log*
+bootsync.bat
 Thumbs.db
 .vscode/
