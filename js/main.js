@@ -33,7 +33,7 @@ function makeObj() {
       checkout: checkinCheckout[random(checkinCheckout.length - 1)],
       features: featuresHouse[random(featuresHouse.length - 1)],
       description: descriptionHose[random(descriptionHose.length - 1)],
-      photos: photosHouse[random(photosHouse.length - 1)],
+      photos: cutItemFromArr(photosHouse)
     },
     location: {
       x: random(positionX, 1),
@@ -66,15 +66,60 @@ function makeItem(obj) {
   return item;
 }
 
+var arrObjects = generateArr();
+
 function fillDom() {
   var target = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
-  var arr = generateArr();
 
-  for (var i = 0; i < arr.length; i++) {
-    fragment.appendChild(makeItem(arr[i]));
+  for (var i = 0; i < arrObjects.length; i++) {
+    fragment.appendChild(makeItem(arrObjects[i]));
   }
   target.appendChild(fragment);
 }
 
 fillDom();
+
+function makeCard() {
+
+  var templateContent = document.querySelector('#card').content.children[0];
+  templateContent.cloneNode(true);
+  var popupTitle = templateContent.querySelector('.popup__title');
+  var popupAddress = templateContent.querySelector('.popup__text--address');
+  var popupPrice = templateContent.querySelector('.popup__text--price');
+  var popupType = templateContent.querySelector('.popup__type');
+  var typeHouseRussian = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
+  var popupCapacity = templateContent.querySelector('.popup__text--capacity');
+  var popupTime = templateContent.querySelector('.popup__text--time');
+  var popupDescription = templateContent.querySelector('.popup__description');
+  var popupPhotos = templateContent.querySelector('.popup__photos');
+  var popupPhoto = popupPhotos.querySelector('.popup__photo');
+  var popupAvatar = templateContent.querySelector('.popup__avatar');
+  var obj = arrObjects[0];
+  var popupFeaturesItems = templateContent.querySelector('.popup__features').children;
+  for (var i = popupFeaturesItems.length - 1; i >= 0; i--) {
+    if (!popupFeaturesItems[i].className.includes('--' + obj.offer.features, 0)) {
+      popupFeaturesItems[i].remove();
+    }
+  }
+  popupTitle.textContent = obj.offer.title;
+  popupAddress.textContent = obj.offer.address;
+  popupPrice.textContent = obj.offer.price + '₽/ночь';
+  popupType.textContent = typeHouseRussian[typeHouse.indexOf(obj.offer.type)];
+  popupCapacity.textContent = obj.offer.rooms + ' комнаты для ' + obj.offer.guests + ' гостей';
+  popupTime.textContent = 'Заезд после ' + obj.offer.checkin + ', выезд до ' + obj.offer.checkout;
+  popupDescription.textContent = obj.offer.description;
+  if (obj.offer.photos) {
+    popupPhoto.src = obj.offer.photos;
+  } else {
+    popupPhotos.style.display = 'none';
+  }
+  popupAvatar.src = obj.author.avatar;
+  return templateContent;
+}
+
+function createDomItemCard() {
+var target = document.querySelector('.map__filters-container');
+  target.before(makeCard());
+}
+createDomItemCard();
