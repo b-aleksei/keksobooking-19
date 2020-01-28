@@ -80,7 +80,7 @@ function fillDom() {
 
 fillDom();
 
-function makeCard() {
+function makeCard(obj) {
 
   var templateContent = document.querySelector('#card').content.children[0];
   templateContent.cloneNode(true);
@@ -95,10 +95,9 @@ function makeCard() {
   var popupPhotos = templateContent.querySelector('.popup__photos');
   var popupPhoto = popupPhotos.querySelector('.popup__photo');
   var popupAvatar = templateContent.querySelector('.popup__avatar');
-  var obj = arrObjects[0];
   var popupFeaturesItems = templateContent.querySelector('.popup__features').children;
   for (var i = popupFeaturesItems.length - 1; i >= 0; i--) {
-    if (!popupFeaturesItems[i].className.includes('--' + obj.offer.features, 0)) {
+    if (!popupFeaturesItems[i].classList.contains('popup__feature--' + obj.offer.features)) {
       popupFeaturesItems[i].remove();
     }
   }
@@ -120,6 +119,6 @@ function makeCard() {
 
 function createDomItemCard() {
   var target = document.querySelector('.map__filters-container');
-  target.before(makeCard());
+  target.insertAdjacentElement('beforebegin', makeCard(arrObjects[0]));
 }
 createDomItemCard();
