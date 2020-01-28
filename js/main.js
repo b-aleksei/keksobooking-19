@@ -119,7 +119,7 @@ function makeCard() {
 }
 
 function createDomItemCard() {
-var target = document.querySelector('.map__filters-container');
+  var target = document.querySelector('.map__filters-container');
   target.before(makeCard());
 }
 createDomItemCard();
