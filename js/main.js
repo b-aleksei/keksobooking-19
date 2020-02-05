@@ -1,4 +1,5 @@
 'use strict';
+var ARR_LENGTH = 8;
 var avatarsUrl = ['01', '02', '03', '04', '05', '06', '07', '08'];
 var titleHouse = ['Квартира', 'Постоялый двор', 'Лачуга', 'Общежитие', 'Комуналка', 'Хостел', 'Отель', 'Часный дом'];
 var locationHouse = ['100, 200', '600, 350', '480, 368', '684, 588', '621, 214', '547, 215', '879, 632', '789, 102'];
@@ -45,7 +46,7 @@ function makeObj() {
 
 function generateArr() {
   var arr = [];
-  for (var i = 0; i < 8; i++) {
+  for (var i = 0; i < ARR_LENGTH; i++) {
     var obj = makeObj();
     arr.push(obj);
   }
@@ -66,66 +67,73 @@ function makeItem(obj) {
   return item;
 }
 
+var mapPins = document.querySelector('.map__pins');
 var arrObjects = generateArr();
 
 function fillDom() {
-  var target = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < arrObjects.length; i++) {
-    fragment.appendChild(makeItem(arrObjects[i]));
+    var item = makeItem(arrObjects[i]);
+    item.dataset.id = i;
+    fragment.appendChild(item);
   }
-  target.appendChild(fragment);
+  mapPins.appendChild(fragment);
 }
 
-var mapFilters = document.querySelectorAll('.map__filter');
-var mapFeatures = document.querySelectorAll('fieldset');
+var mapFilters = document.querySelectorAll('.map__filter, fieldset');
 var mapPin = document.querySelector('.map__pin--main');
 var formMain = document.querySelector('.ad-form');
 var address = document.querySelector('#address');
 var PIN_MAIN_X = 32;
 var PIN_MAIN_Y = 32;
+var PIN_HEIGHT = 70;
 var amountRooms = document.querySelector('#room_number');
 var amountPlaces = document.querySelector('#capacity');
 
 var getAddress = function (pinHeight, pinWidth) {
   var x = pinWidth || PIN_MAIN_X;
   var y = pinHeight || PIN_MAIN_Y;
-  address.value = (mapPin.offsetLeft + x) + ', ' + (mapPin.offsetTop + y);
+  address.value = (mapPin.offsetLeft - x) + ', ' + (mapPin.offsetTop - y);
 };
 getAddress();
 
-var disableFilter = function (boolean) {
+var disableFilter = function () {
   for (var i = 0; i < mapFilters.length; i++) {
-    mapFilters[i].disabled = boolean;
-  }
-
-  for (var j = 0; j < mapFeatures.length; j++) {
-    mapFeatures[j].disabled = boolean;
+    mapFilters[i].disabled = !mapFilters[i].disabled;
   }
 };
 
-disableFilter(true);
+disableFilter();
+var activStatus = false;
 
 var startActivity = function () {
   fillDom();
-  disableFilter(false);
+  disableFilter();
   formMain.classList.remove('ad-form--disabled');
   map.classList.remove('map--faded');
-  getAddress(70);
+  getAddress(PIN_HEIGHT);
+  activStatus = true;
 };
 
-mapPin.addEventListener('mousedown', function (evt) {
-  if (evt.button === 0) {
+var startFromClick = function (evt) {
+  if (evt.button === 0 && !activStatus) {
     startActivity();
+  } else {
+    mapPin.removeEventListener('mousedown', startFromClick);
   }
-});
+};
 
-mapPin.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
+var startFromKeydown = function (evt) {
+  if (evt.key === 'Enter' && !activStatus) {
     startActivity();
+  } else {
+    mapPin.removeEventListener('keydown', startFromKeydown);
   }
-});
+};
+
+mapPin.addEventListener('mousedown', startFromClick);
+mapPin.addEventListener('keydown', startFromKeydown);
 
 var checkValidity = function () {
   if (+amountRooms.value < +amountPlaces.value) {
