@@ -123,55 +123,59 @@ function createDomItemCard(obj) {
   target.before(makeCard(obj));
 }
 
-var mapFilters = document.querySelectorAll('.map__filter');
-var mapFeatures = document.querySelectorAll('fieldset');
+var mapFilters = document.querySelectorAll('.map__filter, fieldset');
 var mapPin = document.querySelector('.map__pin--main');
 var formMain = document.querySelector('.ad-form');
 var address = document.querySelector('#address');
 var PIN_MAIN_X = 32;
 var PIN_MAIN_Y = 32;
+var PIN_HEIGHT = 70;
 var amountRooms = document.querySelector('#room_number');
 var amountPlaces = document.querySelector('#capacity');
 
 var getAddress = function (pinHeight, pinWidth) {
   var x = pinWidth || PIN_MAIN_X;
   var y = pinHeight || PIN_MAIN_Y;
-  address.value = (mapPin.offsetLeft + x) + ', ' + (mapPin.offsetTop + y);
+  address.value = (mapPin.offsetLeft - x) + ', ' + (mapPin.offsetTop - y);
 };
 getAddress();
 
-var disableFilter = function (boolean) {
+var disableFilter = function () {
   for (var i = 0; i < mapFilters.length; i++) {
-    mapFilters[i].disabled = boolean;
-  }
-
-  for (var j = 0; j < mapFeatures.length; j++) {
-    mapFeatures[j].disabled = boolean;
+    mapFilters[i].disabled = !mapFilters[i].disabled;
   }
 };
 
-disableFilter(true);
+disableFilter();
 var activStatus = false;
+
 var startActivity = function () {
   fillDom();
-  disableFilter(false);
+  disableFilter();
   formMain.classList.remove('ad-form--disabled');
   map.classList.remove('map--faded');
-  getAddress(70);
+  getAddress(PIN_HEIGHT);
   activStatus = true;
 };
 
-mapPin.addEventListener('mousedown', function (evt) {
+var startFromClick = function (evt) {
   if (evt.button === 0 && !activStatus) {
     startActivity();
+  } else {
+    mapPin.removeEventListener('mousedown', startFromClick);
   }
-});
+};
 
-mapPin.addEventListener('keydown', function (evt) {
+var startFromKeydown = function (evt) {
   if (evt.key === 'Enter' && !activStatus) {
     startActivity();
+  } else {
+    mapPin.removeEventListener('keydown', startFromKeydown);
   }
-});
+};
+
+mapPin.addEventListener('mousedown', startFromClick);
+mapPin.addEventListener('keydown', startFromKeydown);
 
 // показ карточек по клику на иконке
 map.addEventListener('click', function (evt) {
@@ -189,23 +193,6 @@ map.addEventListener('click', function (evt) {
     card.remove();
   }
 });
-
-
-/*map.addEventListener('click', function (evt) {
-  var cards = map.querySelectorAll('.popup');
-  var pin = evt.target.closest('.map__pin');
-  if (pin && !pin.classList.contains('map__pin--main')) {
-    var id = +pin.dataset.id;
-    cards[id].hidden = false;
-  }
-  var cardClose = evt.target.classList.contains('popup__close');
-  if (cardClose) {
-    for (var i = 0; i < cards.length; i++) {
-      cards[i].hidden = true;
-    }
-  }
-});*/
-
 
 var checkValidity = function () {
   if (+amountRooms.value < +amountPlaces.value) {
