@@ -261,6 +261,7 @@ var checkValidity = function (evt) {
           price.placeholder = '10000';
           price.setCustomValidity('');
       }
+      break;
     case 'timein' :
       timeout.value = timein.value;
       break;
