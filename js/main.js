@@ -115,27 +115,12 @@ function makeCard(obj) {
   } else {
     popupPhotos.style.display = 'none';
   }
-  templateContent.hidden = true;
   return templateContent;
 }
 
-/*function createDomItemCard() {
+function createDomItemCard(obj) {
   var target = document.querySelector('.map__filters-container');
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < arrObjects.length; i++) {
-    fragment.append(makeCard(arrObjects[i]));
-  }
-  // target.insertAdjacentElement('beforebegin', arrObjects[i]));
-  target.before(fragment);
-}*/
-
-function createDomItemCard() {
-  var target = document.querySelector('.map__filters-container');
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < arrObjects.length; i++) {
-    fragment.append(makeCard(arrObjects[i]));
-    target.before(fragment);
-  }
+  target.before(makeCard(obj));
 }
 
 var mapFilters = document.querySelectorAll('.map__filter');
@@ -169,15 +154,11 @@ disableFilter(true);
 var activStatus = false;
 var startActivity = function () {
   fillDom();
-  createDomItemCard();
   disableFilter(false);
   formMain.classList.remove('ad-form--disabled');
   map.classList.remove('map--faded');
   getAddress(70);
   activStatus = true;
-  // var cards = map.querySelectorAll('.popup');
-  // var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
-  // console.dir(pins);
 };
 
 mapPin.addEventListener('mousedown', function (evt) {
@@ -194,17 +175,18 @@ mapPin.addEventListener('keydown', function (evt) {
 
 // показ карточек по клику на иконке
 map.addEventListener('click', function (evt) {
-  var cards = map.querySelectorAll('.popup');
   var pin = evt.target.closest('.map__pin');
+  var card = map.querySelector('.popup');
+  var cardClose = evt.target.classList.contains('popup__close');
+  if (card) {
+    card.remove();
+  }
   if (pin && !pin.classList.contains('map__pin--main')) {
     var id = +pin.dataset.id;
-    cards[id].hidden = false;
+    createDomItemCard(arrObjects[id]);
   }
-  var cardClose = evt.target.classList.contains('popup__close');
   if (cardClose) {
-    for (var i = 0; i < cards.length; i++) {
-      cards[i].hidden = true;
-    }
+    card.remove();
   }
 });
 
