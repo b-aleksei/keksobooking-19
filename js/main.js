@@ -196,7 +196,6 @@ map.addEventListener('click', function (evt) {
 var checkValidity = function (evt) {
   var amountRooms = formMain.querySelector('#room_number');
   var amountPlaces = formMain.querySelector('#capacity');
-  var title = formMain.querySelector('#title');
   var price = formMain.querySelector('#price');
   var type = formMain.querySelector('#type');
   var timein = formMain.querySelector('#timein');
@@ -221,13 +220,6 @@ var checkValidity = function (evt) {
         amountPlaces.setCustomValidity('Количество комнат не может быть меньше количества гостей');
       } else {
         amountPlaces.setCustomValidity('');
-      }
-      break;
-    case 'title' :
-      if (title.validity.tooShort) {
-        title.setCustomValidity('Минимальное кол-во символов 30');
-      } else {
-        title.setCustomValidity('');
       }
       break;
     case 'price' :
@@ -272,3 +264,12 @@ var checkValidity = function (evt) {
 };
 
 formMain.addEventListener('change', checkValidity);
+
+var title = formMain.querySelector('#title');
+title.addEventListener('input', function () {
+  if (title.validity.tooShort) {
+    title.setCustomValidity('Минимальное кол-во символов 30');
+  } else {
+    title.setCustomValidity('');
+  }
+});
