@@ -159,21 +159,17 @@ var startActivity = function () {
 var startFromClick = function (evt) {
   if (evt.button === 0 && !activStatus) {
     startActivity();
-  } else {
-    mapPin.removeEventListener('mousedown', startFromClick);
   }
 };
 
 var startFromKeydown = function (evt) {
   if (evt.key === 'Enter' && !activStatus) {
     startActivity();
-  } else {
-    mapPin.removeEventListener('keydown', startFromKeydown);
   }
 };
 
-mapPin.addEventListener('mousedown', startFromClick);
-mapPin.addEventListener('keydown', startFromKeydown);
+mapPin.addEventListener('mousedown', startFromClick, {once: true});
+mapPin.addEventListener('keydown', startFromKeydown, {once: true});
 
 // показ карточек по клику на иконке
 map.addEventListener('click', function (evt) {
