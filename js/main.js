@@ -172,7 +172,16 @@ mapPin.addEventListener('mousedown', startFromClick, {once: true});
 mapPin.addEventListener('keydown', startFromKeydown, {once: true});
 
 // показ карточек по клику на иконке
+var cardsClose = function (evt) {
+  var card = map.querySelector('.popup');
+  if (evt.key === 'Escape' && card) {
+    card.remove();
+    document.removeEventListener('keydown', cardsClose);
+  }
+};
+
 map.addEventListener('click', function (evt) {
+  document.addEventListener('keydown', cardsClose);
   var pin = evt.target.closest('.map__pin');
   var card = map.querySelector('.popup');
   var cardClose = evt.target.classList.contains('popup__close');
