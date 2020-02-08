@@ -184,11 +184,11 @@ map.addEventListener('click', function (evt) {
   document.addEventListener('keydown', cardsClose);
   var pin = evt.target.closest('.map__pin');
   var card = map.querySelector('.popup');
-  var cardClose = evt.target.classList.contains('popup__close');
+  var cardClose = evt.target.matches('.popup__close');
   if (card) {
     card.remove();
   }
-  if (pin && !pin.classList.contains('map__pin--main')) {
+  if (pin && !pin.matches('.map__pin--main')) {
     var id = +pin.dataset.id;
     createDomItemCard(arrObjects[id]);
   }
@@ -205,6 +205,11 @@ var checkValidity = function (evt) {
   var type = formMain.querySelector('#type');
   var timein = formMain.querySelector('#timein');
   var timeout = formMain.querySelector('#timeout');
+  var setPrice = function (number) {
+    price.min = number;
+    price.placeholder = number;
+    price.setCustomValidity('');
+  };
   var input = evt.target.id;
   switch (input) {
     case 'room_number' :
@@ -239,24 +244,16 @@ var checkValidity = function (evt) {
     case 'type' :
       switch (type.value) {
         case 'bungalo' :
-          price.min = 0;
-          price.placeholder = '0';
-          price.setCustomValidity('');
+          setPrice(0);
           break;
         case 'flat' :
-          price.min = 1000;
-          price.placeholder = '1000';
-          price.setCustomValidity('');
+          setPrice(1000);
           break;
         case 'house' :
-          price.min = 5000;
-          price.placeholder = '5000';
-          price.setCustomValidity('');
+          setPrice(5000);
           break;
         case 'palace':
-          price.min = 10000;
-          price.placeholder = '10000';
-          price.setCustomValidity('');
+          setPrice(10000);
       }
       break;
     case 'timein' :
