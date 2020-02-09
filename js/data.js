@@ -1,5 +1,5 @@
 'use strict';
-var data = (function () {
+window.data = (function () {
   return new MakeData();
 
   function MakeData() {
