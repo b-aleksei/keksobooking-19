@@ -1,6 +1,6 @@
 'use strict';
 
-var pin = (function () {
+(function () {
 
   var mapFilters = document.querySelectorAll('.map__filter, fieldset');
   var mapPin = document.querySelector('.map__pin--main');
@@ -27,10 +27,10 @@ var pin = (function () {
   var activStatus = false;
 
   var startActivity = function () {
-    map.fillDom();
+    window.map.fillDom();
     disableFilter();
     formMain.classList.remove('ad-form--disabled');
-    data.map.classList.remove('map--faded');
+    window.data.map.classList.remove('map--faded');
     getAddress(PIN_HEIGHT);
     activStatus = true;
   };
@@ -52,30 +52,31 @@ var pin = (function () {
 
   // показ карточек по клику на иконке
   var cardsClose = function (evt) {
-    var ticket = data.map.querySelector('.popup');
+    var ticket = window.data.map.querySelector('.popup');
     if (evt.key === 'Escape' && ticket) {
       ticket.remove();
       document.removeEventListener('keydown', cardsClose);
     }
   };
 
-  data.map.addEventListener('click', function (evt) {
+  window.data.map.addEventListener('click', function (evt) {
     document.addEventListener('keydown', cardsClose);
     var point = evt.target.closest('.map__pin');
-    var ticket = data.map.querySelector('.popup');
+    var ticket = window.data.map.querySelector('.popup');
     var cardClose = evt.target.matches('.popup__close');
     if (ticket) {
       ticket.remove();
     }
     if (point && !point.matches('.map__pin--main')) {
+      point.classList.add('.map__pin--active');
+      window.data.map.addEventListener('focusout', function () {
+        point.classList.remove('.map__pin--active');
+      }, {once: true});
       var id = +point.dataset.id;
-      card.createDomItemCard(map.arrObjects[id]);
+      window.card.createDomItemCard(window.map.arrObjects[id]);
     }
     if (cardClose) {
       ticket.remove();
     }
   });
-  return {
-    formMain: formMain
-  };
 })();

@@ -1,6 +1,6 @@
 'use strict';
 
-var card = (function () {
+window.card = (function () {
 
   function makeCard(obj) {
 
@@ -26,7 +26,7 @@ var card = (function () {
     popupTitle.textContent = obj.offer.title;
     popupAddress.textContent = obj.offer.address;
     popupPrice.textContent = obj.offer.price + '₽/ночь';
-    popupType.textContent = typeHouseRussian[data.typeHouse.indexOf(obj.offer.type)];
+    popupType.textContent = typeHouseRussian[window.data.typeHouse.indexOf(obj.offer.type)];
     popupCapacity.textContent = obj.offer.rooms + ' комнаты для ' + obj.offer.guests + ' гостей';
     popupTime.textContent = 'Заезд после ' + obj.offer.checkin + ', выезд до ' + obj.offer.checkout;
     popupDescription.textContent = obj.offer.description;

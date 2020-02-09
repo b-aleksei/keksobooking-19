@@ -1,6 +1,6 @@
 'use strict';
 
-var map = (function () {
+window.map = (function () {
 
   function makeItem(obj) {
     var template = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -16,7 +16,7 @@ var map = (function () {
   }
 
   var mapPins = document.querySelector('.map__pins');
-  var arrObjects = data.generateArr();
+  var arrObjects = window.data.generateArr();
 
   function fillDom() {
     var fragment = document.createDocumentFragment();

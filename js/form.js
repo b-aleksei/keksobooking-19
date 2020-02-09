@@ -2,17 +2,24 @@
 
 (function () {
 
+  var formMain = document.querySelector('.ad-form');
   var checkValidity = function (evt) {
-    var amountRooms = pin.formMain.querySelector('#room_number');
-    var amountPlaces = pin.formMain.querySelector('#capacity');
-    var price = pin.formMain.querySelector('#price');
-    var type = pin.formMain.querySelector('#type');
-    var timein = pin.formMain.querySelector('#timein');
-    var timeout = pin.formMain.querySelector('#timeout');
-    var setPrice = function (number) {
-      price.min = number;
-      price.placeholder = number;
-      price.setCustomValidity('');
+    var amountRooms = formMain.querySelector('#room_number');
+    var amountPlaces = formMain.querySelector('#capacity');
+    var price = formMain.querySelector('#price');
+    var type = formMain.querySelector('#type');
+    var timein = formMain.querySelector('#timein');
+    var timeout = formMain.querySelector('#timeout');
+    var matchType = {
+      bungalo: 0,
+      flat: 1000,
+      house: 5000,
+      palace: 10000,
+      setPrice: function (typeRoom) {
+        price.min = this[typeRoom];
+        price.placeholder = this[typeRoom];
+        price.setCustomValidity('');
+      }
     };
     var input = evt.target.id;
     switch (input) {
@@ -46,19 +53,7 @@
         }
         break;
       case 'type' :
-        switch (type.value) {
-          case 'bungalo' :
-            setPrice(0);
-            break;
-          case 'flat' :
-            setPrice(1000);
-            break;
-          case 'house' :
-            setPrice(5000);
-            break;
-          case 'palace':
-            setPrice(10000);
-        }
+        matchType.setPrice(type.value);
         break;
       case 'timein' :
         timeout.value = timein.value;
@@ -69,9 +64,9 @@
     }
   };
 
-  pin.formMain.addEventListener('change', checkValidity);
+  formMain.addEventListener('change', checkValidity);
 
-  var title = pin.formMain.querySelector('#title');
+  var title = formMain.querySelector('#title');
   title.addEventListener('input', function () {
     if (title.validity.tooShort) {
       title.setCustomValidity('Минимальное кол-во символов 30');
