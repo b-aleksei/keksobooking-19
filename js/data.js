@@ -32,37 +32,37 @@ window.data = (function () {
     return arr.splice(random(arr.length - 1), 1).toString();
   }
 
-  /* eslint-disable */
+
   function makeObj() {
     return {
-      author: {avatar: 'img/avatars/user' + this.cutItemFromArr(this.avatarsUrl) + '.png'},
+      author: {avatar: 'img/avatars/user' + window.data.cutItemFromArr(window.data.avatarsUrl) + '.png'},
       offer: {
-        title: this.cutItemFromArr(this.titleHouse),
-        address: this.cutItemFromArr(this.locationHouse),
-        price: this.cutItemFromArr(this.priceHouse),
-        type: this.typeHouse[this.random(this.typeHouse.length - 1)],
-        rooms: this.random(this.typeHouse.length),
-        guests: this.random(this.ARR_LENGTH),
-        checkin: this.checkinCheckout[this.random(this.checkinCheckout.length - 1)],
-        checkout: this.checkinCheckout[this.random(this.checkinCheckout.length - 1)],
-        features: this.featuresHouse[this.random(this.featuresHouse.length - 1)],
-        description: this.descriptionHose[this.random(this.descriptionHose.length - 1)],
-        photos: this.cutItemFromArr(this.photosHouse)
+        title: window.data.cutItemFromArr(window.data.titleHouse),
+        address: window.data.cutItemFromArr(window.data.locationHouse),
+        price: window.data.cutItemFromArr(window.data.priceHouse),
+        type: window.data.typeHouse[window.data.random(window.data.typeHouse.length - 1)],
+        rooms: window.data.random(window.data.typeHouse.length),
+        guests: window.data.random(window.data.ARR_LENGTH),
+        checkin: window.data.checkinCheckout[window.data.random(window.data.checkinCheckout.length - 1)],
+        checkout: window.data.checkinCheckout[window.data.random(window.data.checkinCheckout.length - 1)],
+        features: window.data.featuresHouse[window.data.random(window.data.featuresHouse.length - 1)],
+        description: window.data.descriptionHose[window.data.random(window.data.descriptionHose.length - 1)],
+        photos: window.data.cutItemFromArr(window.data.photosHouse)
       },
       location: {
-        x: this.random(this.map.offsetWidth, 1),
-        y: this.random(this.MAP_Y_END, this.MAP_Y_START)
+        x: window.data.random(window.data.map.offsetWidth, 1),
+        y: window.data.random(window.data.MAP_Y_END, window.data.MAP_Y_START)
       }
     };
   }
 
   function generateArr() {
     var arr = [];
-    for (var i = 0; i < this.ARR_LENGTH; i++) {
-      var obj = this.makeObj();
+    for (var i = 0; i < window.data.ARR_LENGTH; i++) {
+      var obj = window.data.makeObj();
       arr.push(obj);
     }
     return arr;
   }
-  /* eslint-enable */
+
 })();
