@@ -4,8 +4,8 @@
 
   var numberOfGuests = {
     1: ['1'],
-    2: ['1', '2'],
-    3: ['1', '2', '3'],
+    2: ['2', '1'],
+    3: ['3', '2', '1'],
     100: ['0']
   };
 
@@ -17,6 +17,7 @@
   var amountRooms = formMain.querySelector('#room_number');
   var amountPlaces = formMain.querySelector('#capacity');
   var capacityOptions = amountPlaces.querySelectorAll('option');
+
   var validateRooms = function () {
     var roomValue = amountRooms.value;
     capacityOptions.forEach(function (option) {
