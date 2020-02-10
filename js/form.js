@@ -28,13 +28,10 @@
 
   validateRooms();
 
-  amountRooms.addEventListener('change', function () {
-    validateRooms();
-  });
+  amountRooms.addEventListener('change', validateRooms);
 
   type.addEventListener('change', function () {
-    price.min = window.card.types[type.value].min;
-    price.placeholder = window.card.types[type.value].min;
+    price.placeholder = price.min = window.card.types[type.value].min;
   });
 
   timein.addEventListener('change', function () {
