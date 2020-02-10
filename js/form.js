@@ -3,6 +3,7 @@
 (function () {
 
   var formMain = document.querySelector('.ad-form');
+  var title = formMain.querySelector('#title');
   var checkValidity = function (evt) {
     var amountRooms = formMain.querySelector('#room_number');
     var amountPlaces = formMain.querySelector('#capacity');
@@ -22,6 +23,7 @@
       }
     };
     var input = evt.target.id;
+
     switch (input) {
       case 'room_number' :
         amountPlaces.setCustomValidity('');
@@ -66,7 +68,6 @@
 
   formMain.addEventListener('change', checkValidity);
 
-  var title = formMain.querySelector('#title');
   title.addEventListener('input', function () {
     if (title.validity.tooShort) {
       title.setCustomValidity('Минимальное кол-во символов 30');
