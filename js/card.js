@@ -1,6 +1,26 @@
 'use strict';
 
-window.card = (function () {
+(function () {
+
+  var types = {
+    flat: {
+      ru: 'квартира',
+      min: 1000
+    },
+    palace: {
+      ru: 'дворец',
+      min: 10000
+    },
+    bungalo: {
+      ru: 'бунгало',
+      min: 0
+    },
+    house: {
+      ru: 'дом',
+      min: 5000
+    }
+  };
+
 
   function makeCard(obj) {
 
@@ -10,7 +30,6 @@ window.card = (function () {
     var popupAddress = templateContent.querySelector('.popup__text--address');
     var popupPrice = templateContent.querySelector('.popup__text--price');
     var popupType = templateContent.querySelector('.popup__type');
-    var typeHouseRussian = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
     var popupCapacity = templateContent.querySelector('.popup__text--capacity');
     var popupTime = templateContent.querySelector('.popup__text--time');
     var popupDescription = templateContent.querySelector('.popup__description');
@@ -18,6 +37,7 @@ window.card = (function () {
     var popupPhoto = popupPhotos.querySelector('.popup__photo');
     var popupAvatar = templateContent.querySelector('.popup__avatar');
     var popupFeaturesItems = templateContent.querySelector('.popup__features').children;
+
     for (var i = popupFeaturesItems.length - 1; i >= 0; i--) {
       if (!popupFeaturesItems[i].classList.contains('popup__feature--' + obj.offer.features)) {
         popupFeaturesItems[i].remove();
@@ -26,7 +46,7 @@ window.card = (function () {
     popupTitle.textContent = obj.offer.title;
     popupAddress.textContent = obj.offer.address;
     popupPrice.textContent = obj.offer.price + '₽/ночь';
-    popupType.textContent = typeHouseRussian[window.data.typeHouse.indexOf(obj.offer.type)];
+    popupType.textContent = types[obj.offer.type].ru;
     popupCapacity.textContent = obj.offer.rooms + ' комнаты для ' + obj.offer.guests + ' гостей';
     popupTime.textContent = 'Заезд после ' + obj.offer.checkin + ', выезд до ' + obj.offer.checkout;
     popupDescription.textContent = obj.offer.description;
@@ -43,8 +63,10 @@ window.card = (function () {
     var target = document.querySelector('.map__filters-container');
     target.before(makeCard(obj));
   }
-  return {
-    makeCard: makeCard,
-    createDomItemCard: createDomItemCard
+
+  window.card = {
+    make: makeCard,
+    createDomItem: createDomItemCard,
+    types: types
   };
 })();

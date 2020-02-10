@@ -1,6 +1,6 @@
 'use strict';
 
-window.map = (function () {
+(function () {
 
   function makeItem(obj) {
     var template = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -28,9 +28,9 @@ window.map = (function () {
     }
     mapPins.appendChild(fragment);
   }
-  return {
-    makeItem: makeItem,
+  window.map = {
     fillDom: fillDom,
     arrObjects: arrObjects
   };
+
 })();

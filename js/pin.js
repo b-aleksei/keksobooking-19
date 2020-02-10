@@ -73,10 +73,11 @@
         point.classList.remove('.map__pin--active');
       }, {once: true});
       var id = +point.dataset.id;
-      window.card.createDomItemCard(window.map.arrObjects[id]);
+      window.card.createDomItem(window.map.arrObjects[id]);
     }
     if (cardClose) {
       ticket.remove();
     }
   });
+
 })();
