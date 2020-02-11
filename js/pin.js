@@ -2,18 +2,19 @@
 
 (function () {
 
+  var map = document.querySelector('.map');
   var mapFilters = document.querySelectorAll('.map__filter, fieldset');
   var mapPin = document.querySelector('.map__pin--main');
   var formMain = document.querySelector('.ad-form');
   var address = document.querySelector('#address');
   var PIN_MAIN_X = 32;
   var PIN_MAIN_Y = 32;
-  var PIN_HEIGHT = 70;
+  var PIN_HEIGHT = 80;
 
   var getAddress = function (pinHeight, pinWidth) {
     var x = pinWidth || PIN_MAIN_X;
     var y = pinHeight || PIN_MAIN_Y;
-    address.value = (mapPin.offsetLeft - x) + ', ' + (mapPin.offsetTop - y);
+    address.value = (mapPin.offsetLeft + x) + ', ' + (mapPin.offsetTop + y);
   };
   getAddress();
 
@@ -77,6 +78,48 @@
     }
     if (cardClose) {
       ticket.remove();
+    }
+  });
+
+  //  ==================================================================
+  mapPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+    var shift = {
+      x: evt.clientX - mapPin.offsetLeft,
+      y: evt.clientY - mapPin.offsetTop
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
+    function onMouseMove(e) {
+      var left = e.clientX - shift.x;
+      var top = e.clientY - shift.y;
+
+      if (left < 0 - PIN_MAIN_X) {
+        left = 0 - PIN_MAIN_X;
+      }
+
+      if (left > map.offsetWidth - PIN_MAIN_X) {
+        left = map.offsetWidth - PIN_MAIN_X;
+      }
+      mapPin.style.left = left + 'px';
+
+      if (top < window.data.MAP_Y_START) {
+        top = window.data.MAP_Y_START;
+      }
+
+      if (top > window.data.MAP_Y_END) {
+        top = window.data.MAP_Y_END;
+      }
+      mapPin.style.top = top + 'px';
+
+      getAddress(PIN_HEIGHT);
+    }
+
+    function onMouseUp() {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
     }
   });
 
