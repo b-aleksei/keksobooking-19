@@ -31,7 +31,7 @@
     window.map.fillDom();
     disableFilter();
     formMain.classList.remove('ad-form--disabled');
-    window.data.map.classList.remove('map--faded');
+    map.classList.remove('map--faded');
     getAddress(PIN_HEIGHT);
     activStatus = true;
   };
@@ -53,24 +53,24 @@
 
   // показ карточек по клику на иконке
   var cardsClose = function (evt) {
-    var ticket = window.data.map.querySelector('.popup');
+    var ticket = map.querySelector('.popup');
     if (evt.key === 'Escape' && ticket) {
       ticket.remove();
       document.removeEventListener('keydown', cardsClose);
     }
   };
 
-  window.data.map.addEventListener('click', function (evt) {
+  map.addEventListener('click', function (evt) {
     document.addEventListener('keydown', cardsClose);
     var point = evt.target.closest('.map__pin');
-    var ticket = window.data.map.querySelector('.popup');
+    var ticket = map.querySelector('.popup');
     var cardClose = evt.target.matches('.popup__close');
     if (ticket) {
       ticket.remove();
     }
     if (point && !point.matches('.map__pin--main')) {
       point.classList.add('.map__pin--active');
-      window.data.map.addEventListener('focusout', function () {
+      map.addEventListener('focusout', function () {
         point.classList.remove('.map__pin--active');
       }, {once: true});
       var id = +point.dataset.id;
@@ -81,7 +81,7 @@
     }
   });
 
-  //  ==================================================================
+  //  перемещение метки
   mapPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     var shift = {
