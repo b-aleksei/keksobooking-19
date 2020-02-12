@@ -105,12 +105,12 @@
       }
       mapPin.style.left = left + 'px';
 
-      if (top < window.data.MAP_Y_START) {
-        top = window.data.MAP_Y_START;
+      if (top < window.data.MAP_Y_START - PIN_HEIGHT) {
+        top = window.data.MAP_Y_START - PIN_HEIGHT;
       }
 
-      if (top > window.data.MAP_Y_END) {
-        top = window.data.MAP_Y_END;
+      if (top > window.data.MAP_Y_END - PIN_HEIGHT) {
+        top = window.data.MAP_Y_END - PIN_HEIGHT;
       }
       mapPin.style.top = top + 'px';
 
@@ -121,6 +121,9 @@
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     }
+  });
+  document.addEventListener('click', function (e) {
+    console.log(e.pageX + '/ ' + e.pageY);
   });
 
 })();
