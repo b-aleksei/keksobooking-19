@@ -26,7 +26,7 @@
 
   function fillDom() {
     var fragment = document.createDocumentFragment();
-    window.load.data(function (arr) {
+    window.request.load(function (arr) {
       window.map.response = arr;
       for (var i = 0; i < AMOUNT_PINS; i++) {
         var item = window.map.makeItem(arr[i]);
@@ -34,7 +34,7 @@
         fragment.appendChild(item);
       }
       mapPins.appendChild(fragment);
-    }, window.load.badRequest);
+    }, window.request.badRequest);
   }
 
 })();

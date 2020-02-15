@@ -61,8 +61,8 @@
     xhr.send();
   };
 
-  window.load = {
-    data: load,
+  window.request = {
+    load: load,
     badRequest: badRequest,
   };
 
