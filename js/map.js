@@ -2,6 +2,15 @@
 
 (function () {
 
+  window.map = {
+    response: [],
+    makeItem: makeItem,
+    fillDom: fillDom
+  };
+
+  var mapPins = document.querySelector('.map__pins');
+  var AMOUNT_PINS = 5;
+
   function makeItem(obj) {
     var template = document.querySelector('#pin').content.querySelector('.map__pin');
     var item = template.cloneNode(true);
@@ -15,22 +24,17 @@
     return item;
   }
 
-  var mapPins = document.querySelector('.map__pins');
-  var arrObjects = window.data.generateArr();
-
   function fillDom() {
     var fragment = document.createDocumentFragment();
-
-    for (var i = 0; i < arrObjects.length; i++) {
-      var item = makeItem(arrObjects[i]);
-      item.dataset.id = i;
-      fragment.appendChild(item);
-    }
-    mapPins.appendChild(fragment);
+    window.load.data(function (arr) {
+      window.map.response = arr;
+      for (var i = 0; i < AMOUNT_PINS; i++) {
+        var item = window.map.makeItem(arr[i]);
+        item.dataset.id = i;
+        fragment.appendChild(item);
+      }
+      mapPins.appendChild(fragment);
+    }, window.load.badRequest);
   }
-  window.map = {
-    fillDom: fillDom,
-    arrObjects: arrObjects
-  };
 
 })();
