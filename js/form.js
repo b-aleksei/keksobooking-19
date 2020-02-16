@@ -9,8 +9,10 @@
     100: ['0']
   };
 
+  var map = document.querySelector('.map');
   var main = document.body.querySelector('main');
   var formMain = document.forms[1];
+  var reset = formMain.querySelector('.ad-form__reset');
   var templateSuccessMessage = document.querySelector('#success').content.querySelector('.success');
   var templateMessageError = document.querySelector('#error').content.querySelector('.error');
   var uploadSuccess = templateSuccessMessage.cloneNode(true);
@@ -48,32 +50,30 @@
   });
 
   // показ сообщений об успешной/неуспешной отправке
-  var onRemoveNode = function (node) {
-    node.remove();
-    // eslint-disable-next-line no-invalid-this
-    this.removeEventListener('click', onRemoveNode);
+  var onHandlerMassage = function (node) {
+    node.addEventListener('click', function () {
+      node.remove();
+    }, {once: true});
+    document.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Escape') {
+        node.remove();
+      }
+    }, {once: true});
   };
+
 
   var sendSuccess = function () {
     document.body.append(uploadSuccess);
-    uploadSuccess.addEventListener('click', onRemoveNode.bind(uploadSuccess, uploadSuccess));
-    document.addEventListener('keydown', function (evt) {
-      if (evt.key === 'Escape') {
-        uploadSuccess.remove();
-      }
-    }, {once: true});
+    onHandlerMassage(uploadSuccess);
+    // очищаем форму после упешной отправки и заполняем дефолты
+    formMain.reset();
+    price.placeholder = price.min = window.card.types[type.value].min;
+    window.pin.getAddress();
   };
 
   var sendFail = function () {
     main.append(uploadFail);
-    var errorButton = uploadFail.querySelector('.error__button');
-    uploadFail.addEventListener('click', onRemoveNode.bind(uploadFail, uploadFail));
-    errorButton.addEventListener('click', onRemoveNode.bind(errorButton, uploadFail));
-    document.addEventListener('keydown', function (evt) {
-      if (evt.key === 'Escape') {
-        uploadFail.remove();
-      }
-    }, {once: true});
+    onHandlerMassage(uploadFail);
   };
 
   formMain.addEventListener('submit', function (evt) {
@@ -81,10 +81,16 @@
     window.request.upload(new FormData(formMain), sendSuccess, sendFail);
   });
 
+  reset.addEventListener('click', function () {
+    formMain.classList.add('ad-form--disabled');
+    map.classList.add('map--faded');
+    window.pin.disableFilter();
+    window.pin.activStatus = false;
+    var pins = map.querySelectorAll('.map__pin[data-id]');
+    pins.forEach(function (node) {
+      node.remove();
+    });
 
-  /*  var but = document.querySelector('.ad-form__submit');
-    but.addEventListener('click', function (evt) {
-      evt.preventDefault();
-      sendFail();
-    });*/
+  });
+
 })();

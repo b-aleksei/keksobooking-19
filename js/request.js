@@ -47,7 +47,7 @@
     }, {once: true});
 
     xhr.addEventListener('timeout', function () {
-      error('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      error('Запрос не успел выполниться за ' + xhr.timeout + 'мс. Обновите страницу.');
     }, {once: true});
 
     return xhr;
