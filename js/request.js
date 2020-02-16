@@ -61,8 +61,15 @@
     xhr.send();
   };
 
+  var upload = function (data, success, error) {
+    var xhr = startRequest(success, error);
+    xhr.open('post', document.forms[1].action);
+    xhr.send(data);
+  };
+
   window.request = {
     load: load,
+    upload: upload,
     badRequest: badRequest,
   };
 
