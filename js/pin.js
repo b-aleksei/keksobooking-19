@@ -51,7 +51,7 @@
   mapPin.addEventListener('mousedown', startFromClick, {once: true});
   mapPin.addEventListener('keydown', startFromKeydown, {once: true});
 
-  // показ карточек по клику на иконке
+  // показ пинов по клику на главной метке
   var cardsClose = function (evt) {
     var ticket = map.querySelector('.popup');
     if (evt.key === 'Escape' && ticket) {
@@ -60,21 +60,22 @@
     }
   };
 
+  // показ карточек по клику на пине
   map.addEventListener('click', function (evt) {
     document.addEventListener('keydown', cardsClose);
-    var point = evt.target.closest('.map__pin');
+    var point = evt.target.closest('.map__pin:not(.map__pin--main)');
     var ticket = map.querySelector('.popup');
     var cardClose = evt.target.matches('.popup__close');
     if (ticket) {
       ticket.remove();
     }
-    if (point && !point.matches('.map__pin--main')) {
+    if (point) {
       point.classList.add('.map__pin--active');
-      map.addEventListener('focusout', function () {
+      point.addEventListener('focusout', function () {
         point.classList.remove('.map__pin--active');
       }, {once: true});
       var id = +point.dataset.id;
-      window.card.createDomItem(window.map.arrObjects[id]);
+      window.card.createDomItem(window.map.response[id]);
     }
     if (cardClose) {
       ticket.remove();
@@ -121,9 +122,6 @@
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     }
-  });
-  document.addEventListener('click', function (e) {
-    console.log(e.pageX + '/ ' + e.pageY);
   });
 
 })();
