@@ -2,12 +2,6 @@
 
 (function () {
 
-  window.map = {
-    response: [],
-    makeItem: makeItem,
-    fillDom: fillDom
-  };
-
   var mapPins = document.querySelector('.map__pins');
   var AMOUNT_PINS = 5;
 
@@ -24,17 +18,23 @@
     return item;
   }
 
-  function fillDom() {
-    var fragment = document.createDocumentFragment();
-    window.request.load(function (arr) {
-      window.map.response = arr;
-      for (var i = 0; i < AMOUNT_PINS; i++) {
+  function fillDom(arr) {
+    var pins = mapPins.querySelectorAll('.map__pin[data-id]');
+    pins.forEach(function (node) {
+      node.remove();
+    });
+    if (arr.length > 0) {
+      for (var i = 0; i < arr.length && i < AMOUNT_PINS; i++) {
         var item = window.map.makeItem(arr[i]);
         item.dataset.id = i;
-        fragment.appendChild(item);
+        mapPins.appendChild(item);
       }
-      mapPins.appendChild(fragment);
-    }, window.request.badRequest);
+    }
   }
+
+  window.map = {
+    makeItem: makeItem,
+    fillDom: fillDom
+  };
 
 })();
