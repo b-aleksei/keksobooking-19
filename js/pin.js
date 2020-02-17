@@ -31,12 +31,15 @@
   disableFilter();
 
   var startActivity = function () {
-    window.map.fillDom();
-    disableFilter();
-    formMain.classList.remove('ad-form--disabled');
-    map.classList.remove('map--faded');
-    getAddress(PIN_HEIGHT);
-    window.pin.activStatus = true;
+    window.request.load(function (arr) {
+      window.map.fillDom(arr);
+      disableFilter();
+      formMain.classList.remove('ad-form--disabled');
+      map.classList.remove('map--faded');
+      getAddress(PIN_HEIGHT);
+      window.pin.activStatus = true;
+      window.pin.response = arr;
+    }, window.request.badRequest);
   };
 
   var startFromClick = function (evt) {
@@ -78,7 +81,7 @@
         point.classList.remove('.map__pin--active');
       }, {once: true});
       var id = +point.dataset.id;
-      window.card.createDomItem(window.map.response[id]);
+      window.card.createDomItem(window.pin.response[id]);
     }
     if (cardClose) {
       ticket.remove();
@@ -126,7 +129,6 @@
       document.removeEventListener('mouseup', onMouseUp);
     }
   });
-
   window.pin.disableFilter = disableFilter;
   window.pin.getAddress = getAddress;
 
