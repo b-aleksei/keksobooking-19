@@ -65,10 +65,7 @@
   var sendSuccess = function () {
     document.body.append(uploadSuccess);
     onHandlerMassage(uploadSuccess);
-    // очищаем форму после упешной отправки и заполняем дефолты
-    formMain.reset();
-    price.placeholder = price.min = window.card.types[type.value].min;
-    window.pin.getAddress();
+    reset.click();
   };
 
   var sendFail = function () {
