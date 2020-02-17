@@ -2,20 +2,18 @@
 
 (function () {
 
-  // var arrayObjects = window.pin.response;
-  var chouseHouse = document.querySelector('#housing-type');
-  var typeHouse = chouseHouse.value;
+  var typeHouse = document.querySelector('#housing-type');
 
   function updatePins(evt) {
-    let type = evt.target.value;
+    var type = evt.target.value;
+    window.pin.arrayObjects = window.pin.response;
     if (type !== 'any') {
-      window.pin.response = window.pin.response.filter(function (item) {
+      window.pin.arrayObjects = window.pin.arrayObjects.filter(function (item) {
         return item.offer.type === type;
       });
     }
-    window.map.fillDom(window.pin.response);
+    window.map.fillDom(window.pin.arrayObjects);
   }
-
-  chouseHouse.addEventListener('change', updatePins);
+  typeHouse.addEventListener('change', updatePins);
 
 })();

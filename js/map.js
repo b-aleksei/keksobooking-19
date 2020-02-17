@@ -24,7 +24,6 @@
       node.remove();
     });
     if (arr.length > 0) {
-      console.log(arr);
       for (var i = 0; i < arr.length && i < AMOUNT_PINS; i++) {
         var item = window.map.makeItem(arr[i]);
         item.dataset.id = i;

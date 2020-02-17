@@ -61,11 +61,21 @@
     }, {once: true});
   };
 
+  var resetForm = function () {
+    formMain.classList.add('ad-form--disabled');
+    map.classList.add('map--faded');
+    window.pin.disableFilter();
+    window.pin.activStatus = false;
+    var pins = map.querySelectorAll('.map__pin[data-id]');
+    pins.forEach(function (node) {
+      node.remove();
+    });
+  };
 
   var sendSuccess = function () {
     document.body.append(uploadSuccess);
     onHandlerMassage(uploadSuccess);
-    reset.click();
+    resetForm();
   };
 
   var sendFail = function () {
@@ -78,16 +88,6 @@
     window.request.upload(new FormData(formMain), sendSuccess, sendFail);
   });
 
-  reset.addEventListener('click', function () {
-    formMain.classList.add('ad-form--disabled');
-    map.classList.add('map--faded');
-    window.pin.disableFilter();
-    window.pin.activStatus = false;
-    var pins = map.querySelectorAll('.map__pin[data-id]');
-    pins.forEach(function (node) {
-      node.remove();
-    });
-
-  });
+  reset.addEventListener('click', resetForm);
 
 })();

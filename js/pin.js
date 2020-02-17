@@ -3,7 +3,9 @@
 (function () {
 
   window.pin = {
-    activStatus: false
+    activStatus: false,
+    response: [],
+    arrayObjects: []
   };
 
   var map = document.querySelector('.map');
@@ -39,6 +41,7 @@
       getAddress(PIN_HEIGHT);
       window.pin.activStatus = true;
       window.pin.response = arr;
+      window.pin.arrayObjects = window.pin.response.slice();
     }, window.request.badRequest);
   };
 
@@ -81,7 +84,7 @@
         point.classList.remove('.map__pin--active');
       }, {once: true});
       var id = +point.dataset.id;
-      window.card.createDomItem(window.pin.response[id]);
+      window.card.createDomItem(window.pin.arrayObjects[id]);
     }
     if (cardClose) {
       ticket.remove();
