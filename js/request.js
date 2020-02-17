@@ -2,7 +2,7 @@
 
 (function () {
 
-  var TIMEOUT_MS = 1000;
+  var TIMEOUT_MS = 2000;
   var DELAY_ERROR_MS = 3000;
   var URL_LOAD = 'https://js.dump.academy/keksobooking/data';
   var errorType = {
@@ -47,7 +47,7 @@
     }, {once: true});
 
     xhr.addEventListener('timeout', function () {
-      error('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      error('Запрос не успел выполниться за ' + xhr.timeout + 'мс. Попробуйте снова.');
     }, {once: true});
 
     return xhr;
@@ -61,8 +61,15 @@
     xhr.send();
   };
 
+  var upload = function (data, success, error) {
+    var xhr = startRequest(success, error);
+    xhr.open('post', document.forms[1].action);
+    xhr.send(data);
+  };
+
   window.request = {
     load: load,
+    upload: upload,
     badRequest: badRequest,
   };
 
