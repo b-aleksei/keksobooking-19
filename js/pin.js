@@ -41,7 +41,7 @@
       getAddress(PIN_HEIGHT);
       window.pin.activStatus = true;
       window.pin.response = arr;
-      window.pin.arrayObjects = window.pin.response.slice();
+      window.pin.arrayObjects = window.pin.response;
     }, window.request.badRequest);
   };
 

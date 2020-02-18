@@ -12,8 +12,8 @@
     return arr.splice(random(arr.length - 1), 1).toString();
   };
 
-
   var makeObj = function () {
+
     return {
       author: {avatar: 'img/avatars/user' + window.data.cutItemFromArr(window.data.avatarsUrl) + '.png'},
       offer: {
