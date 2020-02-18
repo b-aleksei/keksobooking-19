@@ -36,13 +36,12 @@
     var popupPhotos = templateContent.querySelector('.popup__photos');
     var popupPhoto = popupPhotos.querySelector('.popup__photo');
     var popupAvatar = templateContent.querySelector('.popup__avatar');
-    var popupFeaturesItems = templateContent.querySelector('.popup__features').children;
+    var popupFeaturesItems = templateContent.querySelector('.popup__features');
+    popupFeaturesItems.innerHTML = '';
 
-    for (var i = popupFeaturesItems.length - 1; i >= 0; i--) {
-      if (!popupFeaturesItems[i].classList.contains('popup__feature--' + obj.offer.features)) {
-        popupFeaturesItems[i].remove();
-      }
-    }
+    obj.offer.features.forEach(function (item) {
+      popupFeaturesItems.innerHTML += '<li class=' + '\"popup__feature popup__feature--' + item + '\"></li>';
+    });
     popupTitle.textContent = obj.offer.title;
     popupAddress.textContent = obj.offer.address;
     popupPrice.textContent = obj.offer.price + '₽/ночь';
@@ -52,7 +51,7 @@
     popupDescription.textContent = obj.offer.description;
     popupAvatar.src = obj.author.avatar;
     if (obj.offer.photos) {
-      popupPhoto.src = obj.offer.photos;
+      popupPhoto.src = obj.offer.photos[window.data.random(obj.offer.photos.length)];
     } else {
       popupPhotos.style.display = 'none';
     }
