@@ -50,8 +50,8 @@
     popupTime.textContent = 'Заезд после ' + obj.offer.checkin + ', выезд до ' + obj.offer.checkout;
     popupDescription.textContent = obj.offer.description;
     popupAvatar.src = obj.author.avatar;
-    if (obj.offer.photos) {
-      popupPhoto.src = obj.offer.photos[window.data.random(obj.offer.photos.length)];
+    if (obj.offer.photos.length > 0) {
+      popupPhoto.src = obj.offer.photos[window.data.random(obj.offer.photos.length - 1)];
     } else {
       popupPhotos.style.display = 'none';
     }
