@@ -21,7 +21,6 @@
     }
   };
 
-
   function makeCard(obj) {
 
     var template = document.querySelector('#card').content.children[0];
@@ -50,8 +49,15 @@
     popupTime.textContent = 'Заезд после ' + obj.offer.checkin + ', выезд до ' + obj.offer.checkout;
     popupDescription.textContent = obj.offer.description;
     popupAvatar.src = obj.author.avatar;
+
     if (obj.offer.photos.length > 0) {
-      popupPhoto.src = obj.offer.photos[window.data.random(obj.offer.photos.length - 1)];
+      popupPhoto.src = obj.offer.photos[0];
+      for (var i = 1; i < obj.offer.photos.length; i++) {
+        var clone = popupPhoto.cloneNode();
+        clone.src = obj.offer.photos[i];
+        popupPhotos.append(clone);
+      }
+
     } else {
       popupPhotos.style.display = 'none';
     }
@@ -68,4 +74,5 @@
     createDomItem: createDomItemCard,
     types: types
   };
+
 })();
