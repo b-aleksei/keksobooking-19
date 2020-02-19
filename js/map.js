@@ -11,8 +11,8 @@
     var itemWidth = 25;
     var itemHeight = 70;
     var itemImg = item.querySelector('img');
-    item.style.left = (obj.location.x - itemWidth) + 'px';
-    item.style.top = (obj.location.y - itemHeight) + 'px';
+    item.style.left = (window.data.random(window.data.map.offsetWidth, 1) - itemWidth) + 'px';
+    item.style.top = (window.data.random(window.data.MAP_Y_END, window.data.MAP_Y_START) - itemHeight) + 'px';
     itemImg.src = obj.author.avatar + '';
     itemImg.alt = obj.offer.title + '';
     return item;

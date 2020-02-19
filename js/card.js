@@ -21,7 +21,6 @@
     }
   };
 
-
   function makeCard(obj) {
 
     var template = document.querySelector('#card').content.children[0];
@@ -75,4 +74,5 @@
     createDomItem: createDomItemCard,
     types: types
   };
+
 })();
