@@ -41,7 +41,7 @@
       getAddress(PIN_HEIGHT);
       window.pin.activStatus = true;
       window.pin.response = arr;
-      window.pin.arrayObjects = window.pin.response.slice();
+      window.pin.arrayObjects = window.pin.response;
     }, window.request.badRequest);
   };
 
@@ -115,12 +115,12 @@
       }
       mapPin.style.left = left + 'px';
 
-      if (top < window.data.MAP_Y_START - PIN_HEIGHT) {
-        top = window.data.MAP_Y_START - PIN_HEIGHT;
+      if (top < window.map.MAP_Y_START - PIN_HEIGHT) {
+        top = window.map.MAP_Y_START - PIN_HEIGHT;
       }
 
-      if (top > window.data.MAP_Y_END - PIN_HEIGHT) {
-        top = window.data.MAP_Y_END - PIN_HEIGHT;
+      if (top > window.map.MAP_Y_END - PIN_HEIGHT) {
+        top = window.map.MAP_Y_END - PIN_HEIGHT;
       }
       mapPin.style.top = top + 'px';
 
