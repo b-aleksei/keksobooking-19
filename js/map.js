@@ -1,16 +1,11 @@
 'use strict';
 
 (function () {
-  var map = document.querySelector('.map');
+
   var MAP_Y_START = 130;
   var MAP_Y_END = 630;
   var mapPins = document.querySelector('.map__pins');
   var AMOUNT_PINS = 5;
-
-  var random = function (max, min) {
-    var minValue = min ? min : 0;
-    return minValue + Math.floor(Math.random() * (max + 1 - minValue));
-  };
 
   var makeItem = function (obj) {
     var template = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -32,7 +27,7 @@
     });
     if (arr.length > 0) {
       for (var i = 0; i < arr.length && i < AMOUNT_PINS; i++) {
-        var item = window.map.makeItem(arr[i]);
+        var item = makeItem(arr[i]);
         item.dataset.id = i;
         mapPins.appendChild(item);
       }
