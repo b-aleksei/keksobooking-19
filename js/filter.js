@@ -27,12 +27,17 @@
     window.pin.arrayObjects = window.pin.arrayObjects.filter(function (item) {
       var validType = (typeValue === 'any') ? true : item.offer.type === typeValue;
       var validPrice = (priceValue === 'any') ? true : priceMatch[priceValue].min <= item.offer.price && item.offer.price < priceMatch[priceValue].max;
-      var validRooms = (roomsValue === 'any') ? true : item.offer.rooms === +roomsValue;
-      var validGuests = (guestsValue === 'any') ? true : item.offer.guests === +guestsValue;
-      var checkboxValue = (checkBoxes.length > 0) ? checkBoxes.every(function (it) {
-        return item.offer.features.includes(it.value);
-      }) : true;
-
+      var validRooms = (roomsValue === 'any') ? true : item.offer.rooms === Number(roomsValue);
+      var validGuests = (guestsValue === 'any') ? true : item.offer.guests === Number(guestsValue);
+      var checkboxValue = true;
+      for (var i = 0; i < checkBoxes.length; i++) {
+        checkboxValue = item.offer.features.some(function (it) {
+          return it === checkBoxes[i].value;
+        });
+        if (!checkboxValue) {
+          break;
+        }
+      }
       return validType && validPrice && validRooms && validGuests && checkboxValue;
     });
 
