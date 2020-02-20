@@ -18,8 +18,8 @@
     var itemWidth = 25;
     var itemHeight = 70;
     var itemImg = item.querySelector('img');
-    item.style.left = (random(map.offsetWidth, 1) - itemWidth) + 'px';
-    item.style.top = (random(MAP_Y_END, MAP_Y_START) - itemHeight) + 'px';
+    item.style.left = (obj.location.x - itemWidth) + 'px';
+    item.style.top = (obj.location.y - itemHeight) + 'px';
     itemImg.src = obj.author.avatar + '';
     itemImg.alt = obj.offer.title + '';
     return item;
