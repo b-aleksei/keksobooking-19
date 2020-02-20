@@ -45,6 +45,7 @@
     }, window.request.badRequest);
   };
 
+  startActivity();
   var startFromClick = function (evt) {
     if (evt.button === 0 && !window.pin.activStatus) {
       startActivity();
