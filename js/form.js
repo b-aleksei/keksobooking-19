@@ -73,7 +73,8 @@
     pins.forEach(function (node) {
       node.remove();
     });
-    formMain.reset();
+    document.forms[0].reset();
+    document.forms[1].reset();
     previewPin.src = 'img/muffin-grey.svg';
     previewHouse.innerHTML = '';
   };

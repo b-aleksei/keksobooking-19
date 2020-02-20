@@ -8,14 +8,14 @@
     arrayObjects: []
   };
 
+  var PIN_MAIN_X = 32;
+  var PIN_MAIN_Y = 32;
+  var PIN_HEIGHT = 80;
   var map = document.querySelector('.map');
   var mapFilters = document.querySelectorAll('.map__filter, fieldset');
   var mapPin = document.querySelector('.map__pin--main');
   var formMain = document.querySelector('.ad-form');
   var address = document.querySelector('#address');
-  var PIN_MAIN_X = 32;
-  var PIN_MAIN_Y = 32;
-  var PIN_HEIGHT = 80;
 
   var getAddress = function (pinHeight, pinWidth) {
     var x = pinWidth || PIN_MAIN_X;

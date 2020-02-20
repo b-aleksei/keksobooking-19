@@ -5,17 +5,17 @@
   var DEBOUNCE_INTERVAL = 500;
   var timeout = null;
   var formFilter = document.forms[0];
-  var housingType = document.querySelector('#housing-type');
-  var housingPrice = document.querySelector('#housing-price');
-  var housingRooms = document.querySelector('#housing-rooms');
-  var housingGuests = document.querySelector('#housing-guests');
+  var housingType = formFilter.querySelector('#housing-type');
+  var housingPrice = formFilter.querySelector('#housing-price');
+  var housingRooms = formFilter.querySelector('#housing-rooms');
+  var housingGuests = formFilter.querySelector('#housing-guests');
   var priceMatch = {
     low: {min: 0, max: 10000},
     middle: {min: 10000, max: 50000},
     high: {min: 50000, max: Number.MAX_VALUE},
   };
 
-  function updatePins() {
+  var updatePins = function () {
     window.pin.arrayObjects = window.pin.response;
     var typeValue = housingType.value;
     var priceValue = housingPrice.value;
@@ -42,7 +42,7 @@
     });
 
     window.map.fillDom(window.pin.arrayObjects);
-  }
+  };
 
   formFilter.addEventListener('change', function () {
     if (timeout) {
