@@ -70,7 +70,7 @@
   };
 
   // показ карточек по клику на пине
-  map.addEventListener('click', function (evt) {
+  document.addEventListener('click', function (evt) {
     document.addEventListener('keydown', cardsClose);
     var point = evt.target.closest('.map__pin[data-id]');
     var ticket = map.querySelector('.popup');

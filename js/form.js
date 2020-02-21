@@ -75,6 +75,8 @@
     });
     document.forms[0].reset();
     document.forms[1].reset();
+    var pinMain = map.querySelector('.map__pin--main');
+    pinMain.style.cssText = 'left: 570px; top: 375px;';
     previewPin.src = 'img/muffin-grey.svg';
     previewHouse.innerHTML = '';
   };
@@ -100,6 +102,10 @@
     window.request.upload(new FormData(formMain), sendSuccess, sendFail);
   });
 
-  reset.addEventListener('click', resetForm);
+  reset.addEventListener('click', function () {
+    resetForm();
+    debugger;
+    window.pin.getAddress();
+  });
 
 })();
