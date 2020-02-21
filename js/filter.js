@@ -22,7 +22,6 @@
     var roomsValue = housingRooms.value;
     var guestsValue = housingGuests.value;
     var checkBoxes = formFilter.querySelectorAll('.map__checkbox:checked');
-    checkBoxes = Array.from(checkBoxes);
 
     window.pin.arrayObjects = window.pin.arrayObjects.filter(function (item) {
       var validType = (typeValue === 'any') ? true : item.offer.type === typeValue;

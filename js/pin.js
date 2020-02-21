@@ -106,24 +106,12 @@
       var left = e.clientX - shift.x;
       var top = e.clientY - shift.y;
 
-      if (left < 0 - PIN_MAIN_X) {
-        left = 0 - PIN_MAIN_X;
+      if (left >= 0 - PIN_MAIN_X && left <= map.offsetWidth - PIN_MAIN_X) {
+        mapPin.style.left = left + 'px';
       }
-
-      if (left > map.offsetWidth - PIN_MAIN_X) {
-        left = map.offsetWidth - PIN_MAIN_X;
+      if (top >= window.map.MAP_Y_START - PIN_HEIGHT && top <= window.map.MAP_Y_END - PIN_HEIGHT) {
+        mapPin.style.top = top + 'px';
       }
-      mapPin.style.left = left + 'px';
-
-      if (top < window.map.MAP_Y_START - PIN_HEIGHT) {
-        top = window.map.MAP_Y_START - PIN_HEIGHT;
-      }
-
-      if (top > window.map.MAP_Y_END - PIN_HEIGHT) {
-        top = window.map.MAP_Y_END - PIN_HEIGHT;
-      }
-      mapPin.style.top = top + 'px';
-
       getAddress(PIN_HEIGHT);
     }
 
