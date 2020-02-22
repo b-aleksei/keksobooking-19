@@ -42,7 +42,7 @@
       window.pin.activStatus = true;
       window.pin.response = arr;
       window.pin.arrayObjects = window.pin.response;
-    }, window.request.badRequest);
+    }, window.request.handlerFailQuery);
   };
 
   var startFromClick = function (evt) {
