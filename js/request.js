@@ -12,7 +12,7 @@
     unknown: 'Неизвестная ошибка, попробуйте позднее',
   };
 
-  var badRequest = function (errorMessage) {
+  var handlerFailQuery = function (errorMessage) {
     var node = document.createElement('div');
     node.style.cssText = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red; position: fixed;' +
       ' left: 0; right: 0; font-size: 30px';
@@ -70,7 +70,7 @@
   window.request = {
     load: load,
     upload: upload,
-    badRequest: badRequest,
+    handlerFailQuery: handlerFailQuery,
   };
 
 })();

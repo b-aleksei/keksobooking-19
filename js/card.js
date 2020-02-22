@@ -38,17 +38,37 @@
     var popupFeaturesItems = templateContent.querySelector('.popup__features');
     popupFeaturesItems.innerHTML = '';
 
-    obj.offer.features.forEach(function (item) {
-      popupFeaturesItems.innerHTML += '<li class=' + '\"popup__feature popup__feature--' + item + '\"></li>';
-    });
-    popupTitle.textContent = obj.offer.title;
-    popupAddress.textContent = obj.offer.address;
-    popupPrice.textContent = obj.offer.price + '₽/ночь';
-    popupType.textContent = types[obj.offer.type].ru;
-    popupCapacity.textContent = obj.offer.rooms + ' комнаты для ' + obj.offer.guests + ' гостей';
-    popupTime.textContent = 'Заезд после ' + obj.offer.checkin + ', выезд до ' + obj.offer.checkout;
-    popupDescription.textContent = obj.offer.description;
-    popupAvatar.src = obj.author.avatar;
+    if (obj.offer.features) {
+      obj.offer.features.forEach(function (item) {
+        popupFeaturesItems.innerHTML += '<li class=' + '\"popup__feature popup__feature--' + item + '\"></li>';
+      });
+    }
+    if (obj.offer.title) {
+      popupTitle.textContent = obj.offer.title;
+    }
+    if (obj.offer.address) {
+      popupAddress.textContent = obj.offer.address;
+    }
+    if (obj.offer.price) {
+      popupPrice.textContent = obj.offer.price + '₽/ночь';
+    }
+    if (obj.offer.type) {
+      popupType.textContent = types[obj.offer.type].ru;
+    }
+    if (obj.offer.rooms) {
+      popupCapacity.textContent = obj.offer.rooms + ' комнаты для ' + obj.offer.guests + ' гостей';
+    }
+    if (obj.offer.checkin && obj.offer.checkout) {
+      popupTime.textContent = 'Заезд после ' + obj.offer.checkin + ', выезд до ' + obj.offer.checkout;
+    }
+    if (obj.offer.description) {
+      popupDescription.textContent = obj.offer.description;
+    }
+    if (obj.author.avatar) {
+      popupAvatar.src = obj.author.avatar;
+    } else {
+      popupAvatar.remove();
+    }
 
     if (obj.offer.photos.length > 0) {
       popupPhoto.src = obj.offer.photos[0];

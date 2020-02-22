@@ -24,6 +24,9 @@
   var amountRooms = formMain.querySelector('#room_number');
   var amountPlaces = formMain.querySelector('#capacity');
   var capacityOptions = amountPlaces.querySelectorAll('option');
+  var previewPin = formMain.querySelector('.ad-form-header__preview img');
+  var previewHouse = formMain.querySelector('.ad-form__photo');
+  var preloader = document.createElement('img');
 
   var validateRooms = function () {
     var roomValue = amountRooms.value;
@@ -70,11 +73,20 @@
     pins.forEach(function (node) {
       node.remove();
     });
+    document.forms[0].reset();
+    document.forms[1].reset();
+    var pinMain = map.querySelector('.map__pin--main');
+    pinMain.style.cssText = 'left: 570px; top: 375px;';
+    previewPin.src = 'img/muffin-grey.svg';
+    previewHouse.innerHTML = '';
+    price.placeholder = price.min = window.card.types[type.value].min;
+    setTimeout(window.pin.getAddress, 0);
   };
 
   var sendSuccess = function () {
     document.body.append(uploadSuccess);
     onHandlerMassage(uploadSuccess);
+    preloader.remove();
     resetForm();
   };
 
@@ -85,6 +97,10 @@
 
   formMain.addEventListener('submit', function (evt) {
     evt.preventDefault();
+    preloader = document.createElement('img');
+    preloader.src = 'img/preloader.gif';
+    preloader.style.cssText = 'position: fixed; top: 50%; left:50%; z-index:999;';
+    document.body.append(preloader);
     window.request.upload(new FormData(formMain), sendSuccess, sendFail);
   });
 
