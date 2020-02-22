@@ -79,6 +79,8 @@
     pinMain.style.cssText = 'left: 570px; top: 375px;';
     previewPin.src = 'img/muffin-grey.svg';
     previewHouse.innerHTML = '';
+    price.placeholder = price.min = window.card.types[type.value].min;
+    setTimeout(window.pin.getAddress, 0);
   };
 
   var sendSuccess = function () {
@@ -102,10 +104,6 @@
     window.request.upload(new FormData(formMain), sendSuccess, sendFail);
   });
 
-  reset.addEventListener('click', function () {
-    resetForm();
-    debugger;
-    window.pin.getAddress();
-  });
+  reset.addEventListener('click', resetForm);
 
 })();
