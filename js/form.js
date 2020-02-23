@@ -12,7 +12,6 @@
   var map = document.querySelector('.map');
   var main = document.body.querySelector('main');
   var formMain = document.forms[1];
-  var reset = formMain.querySelector('.ad-form__reset');
   var templateSuccessMessage = document.querySelector('#success').content.querySelector('.success');
   var templateMessageError = document.querySelector('#error').content.querySelector('.error');
   var uploadSuccess = templateSuccessMessage.cloneNode(true);
