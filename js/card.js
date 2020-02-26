@@ -33,14 +33,13 @@
     var popupTime = templateContent.querySelector('.popup__text--time');
     var popupDescription = templateContent.querySelector('.popup__description');
     var popupPhotos = templateContent.querySelector('.popup__photos');
-    var popupPhoto = popupPhotos.querySelector('.popup__photo');
     var popupAvatar = templateContent.querySelector('.popup__avatar');
     var popupFeaturesItems = templateContent.querySelector('.popup__features');
     popupFeaturesItems.innerHTML = '';
 
     if (obj.offer.features) {
       obj.offer.features.forEach(function (item) {
-        popupFeaturesItems.innerHTML += '<li class=' + '\"popup__feature popup__feature--' + item + '\"></li>';
+        popupFeaturesItems.innerHTML += '<li class=' + '"popup__feature popup__feature--' + item + '"></li>';
       });
     }
     if (obj.offer.title) {
@@ -70,14 +69,11 @@
       popupAvatar.remove();
     }
 
+    popupPhotos.innerHTML = '';
     if (obj.offer.photos.length > 0) {
-      popupPhoto.src = obj.offer.photos[0];
-      for (var i = 1; i < obj.offer.photos.length; i++) {
-        var clone = popupPhoto.cloneNode();
-        clone.src = obj.offer.photos[i];
-        popupPhotos.append(clone);
-      }
-
+      obj.offer.photos.forEach(function (item) {
+        popupPhotos.innerHTML += '<img src="' + item + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
+      });
     } else {
       popupPhotos.style.display = 'none';
     }

@@ -2,7 +2,7 @@
 
 (function () {
 
-  var form = document.forms[1];
+  var form = document.querySelector('.ad-form');
   var photoPin = form.querySelector('#avatar');
   var previewPin = form.querySelector('.ad-form-header__preview img');
   var photoHouse = form.querySelector('#images');

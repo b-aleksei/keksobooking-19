@@ -4,7 +4,7 @@
 
   var DEBOUNCE_INTERVAL = 500;
   var timeout = null;
-  var formFilter = document.forms[0];
+  var formFilter = document.querySelector('.map__filters');
   var housingType = formFilter.querySelector('#housing-type');
   var housingPrice = formFilter.querySelector('#housing-price');
   var housingRooms = formFilter.querySelector('#housing-rooms');
@@ -44,6 +44,10 @@
   };
 
   formFilter.addEventListener('change', function () {
+    var ticket = document.querySelector('.popup');
+    if (ticket) {
+      ticket.remove();
+    }
     if (timeout) {
       clearTimeout(timeout);
     }

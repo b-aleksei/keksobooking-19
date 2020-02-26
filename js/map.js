@@ -5,11 +5,11 @@
   var MAP_Y_START = 130;
   var MAP_Y_END = 630;
   var AMOUNT_PINS = 5;
+  var ITEM_WIDTH = 25;
+  var ITEM_HEIGHT = 70;
   var mapPins = document.querySelector('.map__pins');
 
   var makeItem = function (obj) {
-    var ITEM_WIDTH = 25;
-    var ITEM_HEIGHT = 70;
     var template = document.querySelector('#pin').content.querySelector('.map__pin');
     var item = template.cloneNode(true);
     var itemImg = item.querySelector('img');

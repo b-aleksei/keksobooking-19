@@ -11,7 +11,7 @@
 
   var map = document.querySelector('.map');
   var main = document.body.querySelector('main');
-  var formMain = document.forms[1];
+  var formMain = document.querySelector('.ad-form');
   var templateSuccessMessage = document.querySelector('#success').content.querySelector('.success');
   var templateMessageError = document.querySelector('#error').content.querySelector('.error');
   var uploadSuccess = templateSuccessMessage.cloneNode(true);
@@ -27,7 +27,7 @@
   var previewHouse = formMain.querySelector('.ad-form__photo');
   var preloader = document.createElement('img');
 
-  var validateRooms = function () {
+  var onValidateRooms = function () {
     var roomValue = amountRooms.value;
     capacityOptions.forEach(function (option) {
       option.selected = numberOfGuests[roomValue][0] === option.value;
@@ -35,10 +35,11 @@
     });
   };
 
-  validateRooms();
+  onValidateRooms();
 
-  amountRooms.addEventListener('change', validateRooms);
+  amountRooms.addEventListener('change', onValidateRooms);
 
+  price.placeholder = price.min = window.card.types[type.value].min;
   type.addEventListener('change', function () {
     price.placeholder = price.min = window.card.types[type.value].min;
   });
@@ -63,7 +64,7 @@
     }, {once: true});
   };
 
-  var resetForm = function () {
+  var onResetForm = function () {
     formMain.classList.add('ad-form--disabled');
     map.classList.add('map--faded');
     window.pin.disableFilter();
@@ -87,7 +88,7 @@
     document.body.append(uploadSuccess);
     onHandlerMassage(uploadSuccess);
     preloader.remove();
-    resetForm();
+    onResetForm();
   };
 
   var sendFail = function () {
@@ -104,6 +105,6 @@
     window.request.upload(new FormData(formMain), sendSuccess, sendFail);
   });
 
-  formMain.addEventListener('reset', resetForm);
+  formMain.addEventListener('reset', onResetForm);
 
 })();

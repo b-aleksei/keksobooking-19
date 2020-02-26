@@ -25,9 +25,9 @@
   getAddress();
 
   var disableFilter = function () {
-    for (var i = 0; i < mapFilters.length; i++) {
-      mapFilters[i].disabled = !mapFilters[i].disabled;
-    }
+    mapFilters.forEach(function (item) {
+      item.disabled = !item.disabled;
+    });
   };
 
   disableFilter();
@@ -45,41 +45,44 @@
     }, window.request.handlerFailQuery);
   };
 
-  var startFromClick = function (evt) {
+  var onStartFromClick = function (evt) {
     if (evt.button === 0 && !window.pin.activStatus) {
       startActivity();
     }
   };
 
-  var startFromKeydown = function (evt) {
+  var onStartFromKeydown = function (evt) {
     if (evt.key === 'Enter' && !window.pin.activStatus) {
       startActivity();
     }
   };
 
-  mapPin.addEventListener('mousedown', startFromClick);
-  mapPin.addEventListener('keydown', startFromKeydown);
+  mapPin.addEventListener('mousedown', onStartFromClick);
+  mapPin.addEventListener('keydown', onStartFromKeydown);
 
   // закрытие карточек
-  var cardsClose = function (evt) {
+  var onCloseCards = function (evt) {
     var ticket = map.querySelector('.popup');
     if (evt.key === 'Escape' && ticket) {
       ticket.remove();
-      document.removeEventListener('keydown', cardsClose);
+      document.removeEventListener('keydown', onCloseCards);
     }
   };
 
   // показ карточек по клику на пине
   document.addEventListener('click', function (evt) {
-    document.addEventListener('keydown', cardsClose);
+    document.addEventListener('keydown', onCloseCards);
     var point = evt.target.closest('.map__pin[data-id]');
     var ticket = map.querySelector('.popup');
     var cardClose = evt.target.matches('.popup__close');
-    if (ticket) {
+    if (!evt.target.closest('.map') && ticket) {
       ticket.remove();
     }
     if (point) {
       point.classList.add('.map__pin--active');
+      if (ticket) {
+        ticket.remove();
+      }
       point.addEventListener('focusout', function () {
         point.classList.remove('.map__pin--active');
       }, {once: true});
@@ -106,12 +109,22 @@
       var left = e.clientX - shift.x;
       var top = e.clientY - shift.y;
 
-      if (left >= 0 - PIN_MAIN_X && left <= map.offsetWidth - PIN_MAIN_X) {
-        mapPin.style.left = left + 'px';
+      if (left < 0 - PIN_MAIN_X) {
+        left = -PIN_MAIN_X;
       }
-      if (top >= window.map.MAP_Y_START - PIN_HEIGHT && top <= window.map.MAP_Y_END - PIN_HEIGHT) {
-        mapPin.style.top = top + 'px';
+      if (left > map.offsetWidth - PIN_MAIN_X) {
+        left = map.offsetWidth - PIN_MAIN_X;
       }
+      if (top < window.map.MAP_Y_START - PIN_HEIGHT) {
+        top = window.map.MAP_Y_START - PIN_HEIGHT;
+      }
+      if (top > window.map.MAP_Y_END - PIN_HEIGHT) {
+        top = window.map.MAP_Y_END - PIN_HEIGHT;
+      }
+
+      mapPin.style.left = left + 'px';
+      mapPin.style.top = top + 'px';
+
       getAddress(PIN_HEIGHT);
     }
 

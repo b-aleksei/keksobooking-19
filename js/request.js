@@ -2,15 +2,14 @@
 
 (function () {
 
+  var errorType = {
+    OK: 200,
+    PAGE_NOT_FOUND: 404,
+    SERVER_ERROR: 500
+  };
   var TIMEOUT_MS = 2000;
   var DELAY_ERROR_MS = 3000;
   var URL_LOAD = 'https://js.dump.academy/keksobooking/data';
-  var errorType = {
-    200: 'OK',
-    404: 'Cтраница не найдена, проверьте коректность адреса',
-    500: 'Сервер временно не доступен, скоро все заработает',
-    unknown: 'Неизвестная ошибка, попробуйте позднее',
-  };
 
   var handlerFailQuery = function (errorMessage) {
     var node = document.createElement('div');
@@ -28,17 +27,17 @@
 
     xhr.addEventListener('load', function () {
       switch (xhr.status) {
-        case 200 :
+        case errorType.OK :
           success(xhr.response);
           break;
-        case 404 :
-          error(xhr.status + ' ' + errorType[404]);
+        case errorType.PAGE_NOT_FOUND :
+          error(xhr.status + 'Страница не найдена, проверьте корректность адреса');
           break;
-        case 500 :
-          error(xhr.status + ' ' + errorType[500]);
+        case errorType.SERVER_ERROR :
+          error(xhr.status + 'Сервер временно не доступен, скоро все заработает');
           break;
         default :
-          error(xhr.status + ' ' + errorType.unknown);
+          error(xhr.status + 'Неизвестная ошибка, попробуйте позднее');
       }
     }, {once: true});
 
