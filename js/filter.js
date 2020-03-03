@@ -45,6 +45,7 @@
 
   formFilter.addEventListener('change', function () {
     var ticket = document.querySelector('.popup');
+
     if (ticket) {
       ticket.remove();
     }

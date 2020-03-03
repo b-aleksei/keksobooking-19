@@ -8,6 +8,16 @@
     arrayObjects: []
   };
 
+  var TIME_OUT = window.request.TIMEOUT_MS;
+
+  var ERROR_TYPE = {
+    404: 'PAGE_NOT_FOUND',
+    500: 'SERVER_ERROR',
+    default: 'UNKNOWN ERROR',
+    timeout: 'Запрос не успел выполниться за ' + TIME_OUT + 'мс. Попробуйте снова.',
+    error: 'Произошла ошибка соединения. Проверьте подключение к интернет'
+  };
+
   var PIN_MAIN_X = 32;
   var PIN_MAIN_Y = 32;
   var PIN_HEIGHT = 80;
@@ -33,16 +43,21 @@
   disableFilter();
 
   var startActivity = function () {
-    window.request.load(function (arr) {
+    window.request.start('get', window.request.URL_LOAD).then(function (arr) {
       window.map.fillDom(arr);
-      disableFilter();
-      formMain.classList.remove('ad-form--disabled');
-      map.classList.remove('map--faded');
-      getAddress(PIN_HEIGHT);
-      window.pin.activStatus = true;
       window.pin.response = arr;
       window.pin.arrayObjects = window.pin.response;
-    }, window.request.handlerFailQuery);
+    },
+    function (error) {
+      var errorMessage = ERROR_TYPE[error] ? ERROR_TYPE[error] : ERROR_TYPE.default;
+      window.request.handlerFailQuery(errorMessage);
+    });
+    disableFilter();
+    formMain.classList.remove('ad-form--disabled');
+    map.classList.remove('map--faded');
+    getAddress(PIN_HEIGHT);
+    window.pin.activStatus = true;
+    // }, window.request.handlerFailQuery);
   };
 
   var onStartFromClick = function (evt) {
