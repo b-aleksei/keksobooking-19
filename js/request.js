@@ -3,7 +3,7 @@
 (function () {
 
   var SUCCES_REQUEST = 200;
-  var TIMEOUT_MS = 1000;
+  var TIMEOUT_MS = 3000;
   var DELAY_ERROR_MS = 3000;
   var URL_LOAD = 'https://js.dump.academy/keksobooking/data';
   var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
@@ -22,27 +22,29 @@
   /* eslint-disable */
   var start = function (method, url, data) {
 
-   return new Promise(function (resolve, reject) {
+   return new Promise(function (res, rej) {
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
       xhr.timeout = TIMEOUT_MS;
-      xhr.open(method, url);
-      xhr.send(data);
+
       xhr.addEventListener('load', function () {
         if (xhr.status === SUCCES_REQUEST) {
-          resolve(xhr.response);
+          res(xhr.response);
         } else {
-          reject(xhr.status)
+          rej(xhr.status)
         }
       }, {once: true});
 
       xhr.addEventListener('error', function () {
-        reject('error');
+        rej('error');
       }, {once: true});
 
       xhr.addEventListener('timeout', function () {
-        reject('timeout');
+        rej('timeout');
       }, {once: true});
+
+     xhr.open(method, url);
+     xhr.send(data);
     });
   };
 

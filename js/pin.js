@@ -43,20 +43,21 @@
   disableFilter();
 
   var startActivity = function () {
-    window.request.start('get', window.request.URL_LOAD).then(function (arr) {
-      window.map.fillDom(arr);
-      window.pin.response = arr;
-      window.pin.arrayObjects = window.pin.response;
-    },
-    function (error) {
-      var errorMessage = ERROR_TYPE[error] ? ERROR_TYPE[error] : ERROR_TYPE.default;
-      window.request.handlerFailQuery(errorMessage);
-    });
-    disableFilter();
-    formMain.classList.remove('ad-form--disabled');
-    map.classList.remove('map--faded');
-    getAddress(PIN_HEIGHT);
-    window.pin.activStatus = true;
+    window.request.start('get', window.request.URL_LOAD)
+      .then(function (arr) {
+        window.map.fillDom(arr);
+        window.pin.response = arr;
+        window.pin.arrayObjects = window.pin.response;
+        disableFilter();
+        formMain.classList.remove('ad-form--disabled');
+        map.classList.remove('map--faded');
+        getAddress(PIN_HEIGHT);
+        window.pin.activStatus = true;
+      })
+      .catch(function (error) {
+        var errorMessage = ERROR_TYPE[error] ? ERROR_TYPE[error] : ERROR_TYPE.default;
+        window.request.handlerFailQuery(errorMessage);
+      });
     // }, window.request.handlerFailQuery);
   };
 
