@@ -2,14 +2,11 @@
 
 (function () {
 
-  var errorType = {
-    OK: 200,
-    PAGE_NOT_FOUND: 404,
-    SERVER_ERROR: 500
-  };
-  var TIMEOUT_MS = 2000;
+  var SUCCES_REQUEST = 200;
+  var TIMEOUT_MS = 3000;
   var DELAY_ERROR_MS = 3000;
-  var URL_LOAD = 'https://js.dump.academy/keksobooking/data';
+  var URL_LOAD = 'https://javascript.pages.academy/keksobooking/data';
+  var URL_UPLOAD = 'https://javascript.pages.academy/keksobooking';
 
   var handlerFailQuery = function (errorMessage) {
     var node = document.createElement('div');
@@ -22,54 +19,41 @@
     }, DELAY_ERROR_MS);
   };
 
-  var startRequest = function (success, error) {
-    var xhr = new XMLHttpRequest();
+  /* eslint-disable */
+  var start = function (method, url, data) {
 
-    xhr.addEventListener('load', function () {
-      switch (xhr.status) {
-        case errorType.OK :
-          success(xhr.response);
-          break;
-        case errorType.PAGE_NOT_FOUND :
-          error(xhr.status + 'Страница не найдена, проверьте корректность адреса');
-          break;
-        case errorType.SERVER_ERROR :
-          error(xhr.status + 'Сервер временно не доступен, скоро все заработает');
-          break;
-        default :
-          error(xhr.status + 'Неизвестная ошибка, попробуйте позднее');
-      }
-    }, {once: true});
+   return new Promise(function (res, rej) {
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'json';
+      xhr.timeout = TIMEOUT_MS;
 
-    xhr.addEventListener('error', function () {
-      error('Произошла ошибка соединения. Проверьте подключение к интернет');
-    }, {once: true});
+      xhr.addEventListener('load', function () {
+        if (xhr.status === SUCCES_REQUEST) {
+          res(xhr.response);
+        } else {
+          rej(xhr.status)
+        }
+      }, {once: true});
 
-    xhr.addEventListener('timeout', function () {
-      error('Запрос не успел выполниться за ' + xhr.timeout + 'мс. Попробуйте снова.');
-    }, {once: true});
+      xhr.addEventListener('error', function () {
+        rej('error');
+      }, {once: true});
 
-    return xhr;
-  };
+      xhr.addEventListener('timeout', function () {
+        rej('timeout');
+      }, {once: true});
 
-  var load = function (success, error) {
-    var xhr = startRequest(success, error);
-    xhr.responseType = 'json';
-    xhr.timeout = TIMEOUT_MS;
-    xhr.open('GET', URL_LOAD);
-    xhr.send();
-  };
-
-  var upload = function (data, success, error) {
-    var xhr = startRequest(success, error);
-    xhr.open('post', document.forms[1].action);
-    xhr.send(data);
+     xhr.open(method, url);
+     xhr.send(data);
+    });
   };
 
   window.request = {
-    load: load,
-    upload: upload,
-    handlerFailQuery: handlerFailQuery,
+    start,
+    handlerFailQuery,
+    TIMEOUT_MS,
+    URL_LOAD,
+    URL_UPLOAD
   };
 
 })();
