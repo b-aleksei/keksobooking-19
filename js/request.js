@@ -5,8 +5,8 @@
   var SUCCES_REQUEST = 200;
   var TIMEOUT_MS = 3000;
   var DELAY_ERROR_MS = 3000;
-  var URL_LOAD = 'https://js.dump.academy/keksobooking/data';
-  var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
+  var URL_LOAD = 'https://javascript.pages.academy/keksobooking/data';
+  var URL_UPLOAD = 'https://javascript.pages.academy/keksobooking';
 
   var handlerFailQuery = function (errorMessage) {
     var node = document.createElement('div');

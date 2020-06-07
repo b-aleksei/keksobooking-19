@@ -102,7 +102,8 @@
     preloader.src = 'img/preloader.gif';
     preloader.style.cssText = 'position: fixed; top: 50%; left:50%; z-index:999;';
     document.body.append(preloader);
-    window.request.start('post', window.request.URL_UPLOAD, new FormData(formMain));
+    window.request.start('post', window.request.URL_UPLOAD, new FormData(formMain))
+      .then(sendSuccess, sendFail);
   });
 
   formMain.addEventListener('reset', onResetForm);
